@@ -5,6 +5,9 @@
 import type { BusinessHoursInterval } from "./lib/business-hours";
 
 export const SUPPORTED_MODELS = ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"] as const;
+
+/** Serviço único da Luma (ver supabase/migrations/*_seed_plans.sql). */
+export const DEFAULT_PLAN_CODE = "luma";
 export type SupportedModel = (typeof SUPPORTED_MODELS)[number];
 export type Effort = "low" | "medium" | "high";
 

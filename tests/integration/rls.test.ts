@@ -107,7 +107,7 @@ describe.skipIf(!TEST_DATABASE_URL)("RLS: isolamento entre empresas", () => {
 
   it("usuário sem vínculo e visitante anônimo não veem nada", async () => {
     expect(await asUser(users.outsider, (tx) => tx`select id from public.tenants`)).toHaveLength(0);
-    expect(await asUser(users.outsider, (tx) => tx`select id from public.plans`)).toHaveLength(3);
+    expect(await asUser(users.outsider, (tx) => tx`select id from public.plans`)).toHaveLength(1);
     await expect(asUser(null, (tx) => tx`select id from public.tenants`)).rejects.toThrow(/permission denied/);
   });
 });

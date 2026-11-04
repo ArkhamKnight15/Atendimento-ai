@@ -86,7 +86,7 @@ O isolamento é feito em camadas, para que uma falha numa delas não exponha dad
 4. **Schema `private`**, não exposto pela Data API: tokens criptografados, filas e eventos.
 5. **Ferramentas da IA** recebem empresa, contato e conversa do contexto do servidor, nunca dos argumentos do modelo. Nem uma mensagem maliciosa (prompt injection) consegue alcançar outra empresa.
 6. **Credenciais por canal**: AES-256-GCM com chave mestra em variável de ambiente.
-7. **Limites por plano**: respostas/mês e teto de custo de IA/mês, por empresa.
+7. **Consumo por empresa**: respostas inclusas/mês (excedente cobrado, a IA não para) e teto de custo de IA/mês como trava de segurança.
 
 ## Confiabilidade
 

@@ -9,7 +9,8 @@ export type EventType =
   | "contact.opted_out"
   | "contact.opted_in"
   | "usage.limit_warning"
-  | "usage.limit_reached";
+  | "usage.limit_reached"
+  | "usage.budget_exhausted";
 
 export const EVENT_TYPES: EventType[] = [
   "lead.created",
@@ -20,6 +21,7 @@ export const EVENT_TYPES: EventType[] = [
   "contact.opted_in",
   "usage.limit_warning",
   "usage.limit_reached",
+  "usage.budget_exhausted",
 ];
 
 /**

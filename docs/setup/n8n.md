@@ -50,9 +50,10 @@ X-Webhook-Signature: v1=<hex HMAC-SHA256(segredo, timestamp + "." + corpo bruto)
 |---|---|
 | `lead.created` / `lead.updated` | A IA registrou ou atualizou um lead |
 | `lead.hot` | O lead ficou "quente" (uma vez por lead) |
-| `conversation.handoff_requested` | Transferência para humano (pedido do cliente, reclamação, falha da IA, limite do plano), com resumo |
+| `conversation.handoff_requested` | Transferência para humano (pedido do cliente, reclamação, falha da IA, trava de custo), com resumo |
 | `contact.opted_out` / `contact.opted_in` | Cliente pediu para sair ou voltar a receber mensagens |
-| `usage.limit_warning` / `usage.limit_reached` | Empresa chegou a 80% ou 100% do plano no mês |
+| `usage.limit_warning` / `usage.limit_reached` | Empresa chegou a 80% ou 100% das respostas inclusas no mês (a partir daí conta o excedente; a IA continua) |
+| `usage.budget_exhausted` | Trava de segurança de custo de IA atingida: a IA pausou e as conversas vão para humano |
 
 A entrega é "pelo menos uma vez": em caso de falha (rede, 429, 5xx), há até 8 tentativas com backoff. Use `X-Webhook-Id` para não processar duas vezes.
 
@@ -80,4 +81,4 @@ return [{ json: JSON.parse(raw) }];
 1. **Lead quente → vendedor**: `lead.hot` → mensagem no Telegram/Slack/e-mail do vendedor com nome, interesse e `whatsappLink`.
 2. **Transferência → equipe**: `conversation.handoff_requested` → aviso com o resumo escrito pela IA.
 3. **Leads → planilha/CRM**: `lead.created` → Google Sheets, RD Station, Pipedrive ou HubSpot (nós nativos do n8n).
-4. **Consumo → agência**: `usage.limit_warning` → aviso interno para oferecer upgrade de plano.
+4. **Consumo → agência**: `usage.limit_reached` → aviso interno para faturar o excedente do mês.

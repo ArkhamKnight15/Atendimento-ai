@@ -12,7 +12,7 @@
 | Tratamento de erros | Erros classificados (transitório × definitivo). Retentativas com backoff. O cliente nunca fica sem resposta (contingência + transferência). |
 | Logs de execução | JSON estruturado com telefone mascarado, conteúdo de mensagens omitido e chaves sensíveis removidas. `agent_runs` registra cada resposta da IA. |
 | Duplicidade de mensagens | Índice único por `wamid` + verificação na transação. |
-| Limite de requisições | Por contato (10/min, 150/dia), por empresa (respostas e custo mensais do plano) e por resposta (até 4 iterações de ferramenta). |
+| Limite de requisições | Por contato (10/min, 150/dia), por empresa (teto mensal de custo de IA) e por resposta (até 4 iterações de ferramenta). |
 | Webhook e cron | `/api/webhooks/whatsapp` só aceita assinatura válida. `/api/cron/jobs` exige `Authorization: Bearer CRON_SECRET`. |
 | Backup e recuperação | Supabase Pro faz backup diário. Recomendado ativar **PITR** quando houver clientes pagantes. As migrações versionadas recriam o esquema. O outbox e a fila garantem que nada se perde se uma função cair. |
 

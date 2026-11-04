@@ -37,9 +37,9 @@ create table public.plans (
   description text,
   monthly_price_cents integer not null default 0 check (monthly_price_cents >= 0),
   setup_price_cents integer not null default 0 check (setup_price_cents >= 0),
-  -- respostas geradas pela IA por mês (unidade de cobrança compreensível pelo cliente)
+  -- respostas da IA inclusas no mês; acima disso o excedente é cobrado (a IA continua)
   monthly_ai_replies integer not null check (monthly_ai_replies > 0),
-  -- teto de custo de IA por mês, em micro-dólares (proteção contra abuso/loops)
+  -- teto de custo de IA por mês, em micro-dólares: trava de segurança contra abuso/loops (pausa a IA)
   monthly_ai_budget_usd_micros bigint not null check (monthly_ai_budget_usd_micros > 0),
   max_channels integer not null default 1 check (max_channels > 0),
   features jsonb not null default '{}'::jsonb,
@@ -356,8 +356,9 @@ create table public.usage_monthly (
   cost_usd_micros bigint not null default 0,
   leads_created integer not null default 0,
   handoffs integer not null default 0,
-  limit_warning_at timestamptz,
-  limit_reached_at timestamptz,
+  limit_warning_at timestamptz,   -- 80% das respostas inclusas
+  limit_reached_at timestamptz,   -- 100% das respostas inclusas (começa o excedente)
+  budget_exhausted_at timestamptz, -- teto de custo de IA atingido (IA pausada)
   updated_at timestamptz not null default now(),
   primary key (tenant_id, period)
 );

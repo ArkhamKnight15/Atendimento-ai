@@ -5,7 +5,6 @@
   "segment": "Clínica odontológica particular",
   "description": "Clínica odontológica de alto padrão no Jardim Europa, em São Paulo, fundada em 2010. Atendimento personalizado com especialistas, diagnóstico digital (escaneamento 3D, tomografia) e foco em conforto do paciente.",
   "status": "onboarding",
-  "plan": "profissional",
   "timezone": "America/Sao_Paulo",
   "privacyPolicyUrl": "https://odontovita.example.com/privacidade",
   "contact": {

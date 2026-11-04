@@ -6,6 +6,7 @@ export interface MonthlyUsage {
   costUsdMicros: number;
   limitWarningAt: Date | null;
   limitReachedAt: Date | null;
+  budgetExhaustedAt: Date | null;
 }
 
 /** Primeiro dia do mês corrente no fuso da empresa (AAAA-MM-01). */
@@ -18,9 +19,9 @@ export function usagePeriod(now: Date, timeZone: string): string {
 
 export async function getMonthlyUsage(db: Db, tenantId: string, period: string): Promise<MonthlyUsage> {
   const [row] = await db<MonthlyUsage[]>`
-    select ai_replies, cost_usd_micros, limit_warning_at, limit_reached_at
+    select ai_replies, cost_usd_micros, limit_warning_at, limit_reached_at, budget_exhausted_at
     from public.usage_monthly where tenant_id = ${tenantId} and period = ${period}`;
-  return row ?? { aiReplies: 0, costUsdMicros: 0, limitWarningAt: null, limitReachedAt: null };
+  return row ?? { aiReplies: 0, costUsdMicros: 0, limitWarningAt: null, limitReachedAt: null, budgetExhaustedAt: null };
 }
 
 export interface UsageIncrement {
@@ -56,21 +57,23 @@ export async function incrementUsage(db: Db, tenantId: string, period: string, i
       handoffs = u.handoffs + excluded.handoffs`;
 }
 
-/** Marca o aviso/limite apenas uma vez por mês. Retorna true se marcou agora. */
+const THRESHOLD_COLUMN = {
+  warning: "limit_warning_at",
+  reached: "limit_reached_at",
+  budget: "budget_exhausted_at",
+} as const;
+
+/** Marca cada marco de consumo apenas uma vez por mês. Retorna true se marcou agora. */
 export async function flagUsageThreshold(
   db: Db,
   tenantId: string,
   period: string,
-  kind: "warning" | "reached",
+  kind: keyof typeof THRESHOLD_COLUMN,
   at: Date,
 ): Promise<boolean> {
-  const rows =
-    kind === "warning"
-      ? await db`
-          update public.usage_monthly set limit_warning_at = ${at}
-          where tenant_id = ${tenantId} and period = ${period} and limit_warning_at is null returning 1`
-      : await db`
-          update public.usage_monthly set limit_reached_at = ${at}
-          where tenant_id = ${tenantId} and period = ${period} and limit_reached_at is null returning 1`;
+  const column = db(THRESHOLD_COLUMN[kind]);
+  const rows = await db`
+    update public.usage_monthly set ${column} = ${at}
+    where tenant_id = ${tenantId} and period = ${period} and ${column} is null returning 1`;
   return rows.length > 0;
 }

@@ -18,7 +18,7 @@ export async function createTenant(
   const config = parseTenantConfig({
     slug: input.slug,
     name: `Empresa ${input.slug}`,
-    plan: input.plan ?? "profissional",
+    plan: input.plan ?? "luma",
     status: "active",
     privacyPolicyUrl: input.privacyPolicyUrl,
     agent: {

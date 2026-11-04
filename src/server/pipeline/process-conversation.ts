@@ -178,29 +178,30 @@ export async function processConversation(
     return "rate_limited";
   }
 
-  // Limites do plano.
+  // Consumo do mês. As respostas inclusas são um limite "macio": a IA continua atendendo e o
+  // excedente é cobrado do cliente. Só o teto de custo de IA (trava de segurança) pausa a IA.
   const period = usagePeriod(now, ctx.tenant.timezone);
   const limits = effectiveLimits(ctx.plan, ctx.tenant);
   const usage = await getMonthlyUsage(deps.sql, tenantId, period);
-  const usageRatio = Math.max(
-    usage.aiReplies / limits.monthlyAiReplies,
-    usage.costUsdMicros / limits.monthlyAiBudgetUsdMicros,
-  );
-  if (usageRatio >= 1) {
+  const payload = { period, usage, limits };
+  if (usage.costUsdMicros >= limits.monthlyAiBudgetUsdMicros) {
     await deps.sql.begin(async (tx) => {
-      if (await flagUsageThreshold(tx, tenantId, period, "reached", now)) {
-        await emitEvent(tx, { tenantId, type: "usage.limit_reached", payload: { period, usage, limits }, dedupeKey: `usage.reached:${tenantId}:${period}`, at: now });
+      if (await flagUsageThreshold(tx, tenantId, period, "budget", now)) {
+        await emitEvent(tx, { tenantId, type: "usage.budget_exhausted", payload, dedupeKey: `usage.budget:${tenantId}:${period}`, at: now });
       }
-      await handOff(tx, ctx, "usage_limit", "Limite mensal de respostas automáticas do plano atingido.", now);
+      await handOff(tx, ctx, "usage_limit", "Teto mensal de custo de IA atingido (trava de segurança).", now);
       const parts = await reply(tx, ctx, { text: ctx.agent.handoffMessage, sender: "system", inboundIds, agentRunId: null, at: now });
       await incrementUsage(tx, tenantId, period, { outboundMessages: parts });
     });
     await flushPendingOutbound(deps, ctx, log);
-    log.warn("limite do plano atingido; conversa transferida");
+    log.warn("teto de custo de IA atingido; conversa transferida");
     return "usage_limit";
   }
-  if (usageRatio >= USAGE_WARNING_RATIO && (await flagUsageThreshold(deps.sql, tenantId, period, "warning", now))) {
-    await emitEvent(deps.sql, { tenantId, type: "usage.limit_warning", payload: { period, usage, limits }, dedupeKey: `usage.warning:${tenantId}:${period}`, at: now });
+  const includedRatio = usage.aiReplies / limits.monthlyAiReplies;
+  if (includedRatio >= 1 && (await flagUsageThreshold(deps.sql, tenantId, period, "reached", now))) {
+    await emitEvent(deps.sql, { tenantId, type: "usage.limit_reached", payload, dedupeKey: `usage.reached:${tenantId}:${period}`, at: now });
+  } else if (includedRatio >= USAGE_WARNING_RATIO && (await flagUsageThreshold(deps.sql, tenantId, period, "warning", now))) {
+    await emitEvent(deps.sql, { tenantId, type: "usage.limit_warning", payload, dedupeKey: `usage.warning:${tenantId}:${period}`, at: now });
   }
 
   // Confirma leitura e mostra "digitando…" enquanto a IA trabalha (melhor esforço).

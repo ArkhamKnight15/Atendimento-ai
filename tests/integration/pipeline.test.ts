@@ -12,6 +12,9 @@ import { createTestDeps, llmMessage, text, toolUse, type TestDeps } from "../hel
 import { createTenant, type TenantFixture } from "../helpers/fixtures";
 import { inboundPayload, statusPayload, textMessage } from "../helpers/whatsapp-payloads";
 
+const currentPeriod = () =>
+  `${new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit" }).format(new Date()).slice(0, 7)}-01`;
+
 const overloaded = () =>
   new InternalServerError(500, { type: "error", error: { type: "api_error", message: "overloaded" } }, "overloaded", new Headers());
 
@@ -185,20 +188,33 @@ describe.skipIf(!TEST_DATABASE_URL)("pipeline WhatsApp → IA → resposta", () 
     expect(deps.problems).toEqual([]);
   });
 
-  it("ao atingir o limite do plano, transfere para humano sem gastar IA", async () => {
-    const period = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit" })
-      .format(new Date())
-      .slice(0, 7);
+  it("acima das respostas inclusas a IA continua atendendo e o excedente é sinalizado uma vez", async () => {
     await sql`
-      insert into public.usage_monthly (tenant_id, period, ai_replies) values (${b.tenantId}, ${`${period}-01`}, 999999)
-      on conflict (tenant_id, period) do update set ai_replies = 999999, limit_reached_at = null`;
+      insert into public.usage_monthly (tenant_id, period, ai_replies) values (${b.tenantId}, ${currentPeriod()}, 5000)
+      on conflict (tenant_id, period) do update set ai_replies = 5000, limit_reached_at = null, limit_warning_at = null`;
+    deps.llm.enqueue(text("Claro, posso ajudar!"), text("Por nada!"));
     await receive(b, "olá");
+    await receive(b, "obrigado");
+    expect(deps.whatsapp.sent.map((m) => m.body)).toEqual(["Claro, posso ajudar!", "Por nada!"]);
+    expect((await conversationOf(b.tenantId))?.status).toBe("open");
+    const events = await sql`select 1 from private.events where tenant_id = ${b.tenantId} and type = 'usage.limit_reached'`;
+    expect(events).toHaveLength(1);
+    const [usage] = await sql<{ aiReplies: number }[]>`select ai_replies from public.usage_monthly where tenant_id = ${b.tenantId} and period = ${currentPeriod()}`;
+    expect(usage?.aiReplies).toBe(5002);
+    expect(deps.problems).toEqual([]);
+  });
+
+  it("ao atingir o teto de custo de IA (trava de segurança), transfere para humano sem gastar IA", async () => {
+    await sql`
+      update public.usage_monthly set cost_usd_micros = 10000000, budget_exhausted_at = null
+      where tenant_id = ${b.tenantId} and period = ${currentPeriod()}`;
+    await receive(b, "olá de novo");
     expect(deps.llm.calls).toHaveLength(0);
     expect(deps.whatsapp.sent[0]?.body).toBe("Vou chamar alguém da equipe para continuar com você.");
     expect(await conversationOf(b.tenantId)).toMatchObject({ status: "human", handoffReason: "usage_limit" });
-    const events = await sql`select 1 from private.events where tenant_id = ${b.tenantId} and type = 'usage.limit_reached'`;
+    const events = await sql`select 1 from private.events where tenant_id = ${b.tenantId} and type = 'usage.budget_exhausted'`;
     expect(events).toHaveLength(1);
-    await sql`update public.usage_monthly set ai_replies = 0, limit_reached_at = null where tenant_id = ${b.tenantId}`;
+    await sql`update public.usage_monthly set ai_replies = 0, cost_usd_micros = 0, budget_exhausted_at = null where tenant_id = ${b.tenantId}`;
   });
 
   it("falha transitória da IA volta para a fila; na última tentativa o cliente recebe contingência", async () => {

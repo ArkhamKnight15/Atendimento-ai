@@ -35,7 +35,7 @@ erDiagram
 
 | Tabela | Para quê | Pontos importantes |
 |---|---|---|
-| `plans` | Planos comerciais | `monthly_ai_replies`, `monthly_ai_budget_usd_micros`, `max_channels`, `features` (jsonb), `ai_model`, `ai_effort` |
+| `plans` | O serviço da Luma (hoje um único registro, `luma`) | preço, `monthly_ai_replies` (inclusas), `monthly_ai_budget_usd_micros` (trava), `max_channels`, `features`, `ai_model`, `ai_effort` |
 | `tenants` | Empresas clientes | `slug` único, `status` (onboarding/active/suspended/canceled), `limits_override`, fuso, contato, `privacy_policy_url` |
 | `tenant_members` | Usuários do painel por empresa | papéis `owner`, `admin`, `agent`, `viewer` (Supabase Auth) |
 | `private.platform_admins` | Equipe da agência | acesso a todas as empresas |
@@ -50,7 +50,7 @@ erDiagram
 | `messages` | Histórico completo | `external_id` (wamid) único para idempotência, `seq` para ordem estável, status de entrega |
 | `agent_runs` | Cada resposta da IA | modelo, tokens (entrada/saída/cache), custo em micro-dólares, ferramentas, latência, erro |
 | `leads` | Oportunidades | um lead aberto por contato, temperatura, qualificação, etapa (`new` → `qualified` → `contacted` → `won`/`lost`) |
-| `usage_monthly` | Consumo agregado por mês | respostas, mensagens, tokens, custo, leads, transferências, marcas de aviso/limite |
+| `usage_monthly` | Consumo agregado por mês | respostas, mensagens, tokens, custo, leads, transferências, marcas de 80%/100% das inclusas e da trava de custo |
 | `webhook_endpoints` (+ `private.webhook_endpoint_secrets`) | Destinos de eventos (n8n) | só HTTPS público, eventos assinados |
 | `private.events`, `private.event_deliveries` | Outbox de eventos | entregas com tentativas e último erro |
 | `private.jobs` | Fila de trabalho | um job aguardando por referência (debounce), lease, tentativas, backoff |

@@ -37,8 +37,8 @@ dentro do WhatsApp Manager): as respostas dentro da janela de 24h **deixaram de 
 | Template de **utilidade** (lembrete, confirmação) | ~R$ 0,04 – 0,08 | Fase 4 |
 | Template de **marketing** (follow-up, recuperação) | ~R$ 0,35 – 0,41 | Fase 4 |
 
-Impacto com o plano usado até o limite: Básico (2.000 respostas) ≈ **R$ 37/mês**, Profissional (6.000) ≈ **R$ 187/mês**,
-Avançado (15.000) ≈ **R$ 520/mês**. **No atendimento, o WhatsApp passa a custar mais que a IA.** Por isso o agente responde em
+Impacto para o cliente com as 2.000 respostas inclusas ≈ **R$ 37/mês** (cada 1.000 a mais ≈ R$ 37).
+**No atendimento, o WhatsApp passa a custar mais que a IA.** Por isso o agente responde em
 uma única mensagem curta (agrupamento de mensagens + `maxReplyChars`).
 
 **Recomendação comercial:** o cliente cadastra o **próprio cartão na conta WhatsApp Business (WABA)**, e a Meta cobra o uso
@@ -61,38 +61,37 @@ Ao passar de ~30 clientes ativos, reserve mais ~US$ 15/mês para subir o compute
 
 ## Custo de software por cliente (para a Luma; o WhatsApp é pago pelo cliente à Meta)
 
-| Clientes ativos | Infra rateada | IA (Profissional, 6 mil respostas) | **Custo por cliente/mês** |
+| Clientes ativos | Infra rateada | IA (até 6 mil respostas/mês) | **Custo por cliente/mês** |
 |---|---|---|---|
 | 5 | R$ 64 | R$ 11 – 28 | **≈ R$ 75 – 92** |
 | 20 | R$ 16 | R$ 11 – 28 | **≈ R$ 27 – 44** |
 | 50 | R$ 8 (+ compute) | R$ 11 – 28 | **≈ R$ 21 – 38** |
 
-## Quanto cobrar (preços recomendados, já cadastrados no banco e editáveis)
+## Quanto cobrar: um serviço único
 
-| Plano | Implantação | Mensalidade | Respostas IA/mês | Custo Luma/mês* | Margem* |
-|---|---|---|---|---|---|
-| Básico | R$ 990 | **R$ 497** | 2.000 | ≈ R$ 190 | ~60% |
-| Profissional | R$ 1.990 | **R$ 897** | 6.000 | ≈ R$ 360 | ~60% |
-| Avançado | a partir de R$ 3.990 | **a partir de R$ 1.697** | 15.000 | ≈ R$ 720 | ~58% |
+A Luma vende **um serviço só**: a IA de atendimento da empresa, nos canais que ela usar (WhatsApp, Instagram e site, sem
+custo extra por canal). O que varia entre clientes é o **volume**, e isso é resolvido pelo excedente, não por níveis.
 
-\* Com 20 clientes: infraestrutura rateada + IA no limite do plano + **tempo da equipe** (2 h/mês no Básico, 4 h no
-Profissional e 8 h no Avançado, a R$ 80/h). Sem contar o tempo da equipe, a margem de software passa de 90%. O WhatsApp
-**não entra**, porque é cobrado pela Meta direto no cartão do cliente.
+| | Valor |
+|---|---|
+| **Implantação** (uma vez) | **R$ 697** |
+| **Mensalidade** | **R$ 397** |
+| Inclui | até 3 canais (WhatsApp, Instagram, site), 2.000 respostas da IA/mês, leads, transferência para humano, avisos ao vendedor, painel (Fase 3) e 1 ajuste de conteúdo/mês |
+| Excedente | **R$ 39 a cada 1.000 respostas** acima das 2.000 (a IA não para de atender) |
+| WhatsApp (Meta) | pago pelo cliente direto à Meta, no cartão dele |
 
-**Por que esses valores:**
-- **Âncora de valor:** um atendente CLT custa ~R$ 3–5 mil/mês com encargos e cobre só o horário comercial. O agente atende
-  24h e capta leads fora do expediente. A mensalidade fica entre 10% e 30% desse custo, um argumento fácil de vender.
-- **Mercado:** ferramentas "faça você mesmo" custam ~US$ 50–130/mês, sem implantação nem acompanhamento; plataformas
-  enterprise partem de ~R$ 3 mil/mês; projetos sob medida custam R$ 8–20 mil. A Luma vende serviço completo: precisa ficar
-  acima das ferramentas e bem abaixo do enterprise.
-- **Implantação** cobre de 8 a 40 h de trabalho (levantamento, base de conhecimento, calibração no simulador, conexão do número).
+**Custo para a Luma por cliente** (com 10 clientes): infraestrutura rateada ~R$ 32 + contador rateado ~R$ 20 + IA ~R$ 6–11
++ ~1,5 h de suporte → margem de **~50%** contando o seu tempo, e **> 85%** sem ele. Com 10 clientes: ~R$ 3.970/mês de
+faturamento e ~R$ 3.400 de sobra antes de impostos, mais as implantações.
 
-**Regras comerciais recomendadas:**
-1. Tarifas da Meta cobradas direto no cartão do cliente (na WABA dele).
-2. Excedente: **R$ 59 a cada 1.000 respostas** além do plano (o custo de IA é ~R$ 5,50).
-3. Fidelidade mínima de 6 meses, ou pagamento anual com 2 meses grátis.
-4. **Clientes fundadores** (os 3 primeiros): 50% de desconto na implantação em troca de depoimento e estudo de caso.
-5. Venda só o que já existe: hoje, Básico completo e Profissional **sem** agendamento e relatórios no painel (Fases 3 e 4).
-   Até lá, ofereça o Profissional com desconto de fundador e deixe claras as datas.
+**Por que esse valor:** um atendente CLT custa ~R$ 3–5 mil/mês e só cobre horário comercial; ferramentas "faça você mesmo"
+custam ~US$ 50–130/mês sem serviço; plataformas enterprise partem de ~R$ 3 mil/mês. R$ 397 com implantação e acompanhamento
+fica acessível para pequenas empresas e acima das ferramentas sem serviço.
 
-O "teto de custo IA" do plano é uma trava de segurança (cerca de 5× o esperado), não a previsão de gasto.
+**Regras comerciais:**
+1. Fidelidade mínima de 6 meses (ou anual com 2 meses grátis).
+2. Ajustes de conteúdo além do incluso: cobrados à parte, ou feitos pelo próprio cliente quando o painel liberar a edição.
+3. **Clientes fundadores** (os 3 primeiros): 30 dias grátis, implantação pela metade e preço travado por 12 meses, em troca de depoimento.
+4. Clientes muito grandes (várias unidades, muitos números): proposta sob medida, a partir do mesmo preço-base.
+
+O "teto de custo IA" (US$ 10/mês por cliente, ~10× o esperado) é só uma trava de segurança contra abuso; abaixo dele a IA nunca para.

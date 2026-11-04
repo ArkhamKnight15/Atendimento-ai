@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SUPPORTED_MODELS } from "../domain";
+import { DEFAULT_PLAN_CODE, SUPPORTED_MODELS } from "../domain";
 
 /**
  * Formato do arquivo de configuração de uma empresa (tenants/<slug>.json).
@@ -38,7 +38,7 @@ export const tenantConfigSchema = z.object({
   segment: text(120).optional(),
   description: text(4000).optional(),
   status: z.enum(["onboarding", "active", "suspended", "canceled"]).default("onboarding"),
-  plan: z.string().min(1),
+  plan: z.string().min(1).default(DEFAULT_PLAN_CODE),
   timezone: z.string().default("America/Sao_Paulo"),
   privacyPolicyUrl: z.url({ protocol: /^https$/ }).optional(),
   limitsOverride: z

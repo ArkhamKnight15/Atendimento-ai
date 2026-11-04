@@ -125,7 +125,6 @@ describe("custos de IA", () => {
 const base = {
   slug: "loja-teste",
   name: "Loja Teste",
-  plan: "basico",
   agent: { name: "Ana", tone: "simpático", handoffMessage: "Vou chamar a equipe.", fallbackMessage: "Tive um problema." },
 };
 const invalidConfig = {
