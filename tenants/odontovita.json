@@ -1,0 +1,111 @@
+{
+  "_comment": "EXEMPLO FICTÍCIO de configuração de cliente (dados de demonstração). Campos iniciados por _ são ignorados.",
+  "slug": "odontovita",
+  "name": "OdontoVita",
+  "segment": "Clínica odontológica particular",
+  "description": "Clínica odontológica de alto padrão no Jardim Europa, em São Paulo, fundada em 2010. Atendimento personalizado com especialistas, diagnóstico digital (escaneamento 3D, tomografia) e foco em conforto do paciente.",
+  "status": "onboarding",
+  "plan": "profissional",
+  "timezone": "America/Sao_Paulo",
+  "privacyPolicyUrl": "https://odontovita.example.com/privacidade",
+  "contact": {
+    "address": "Rua das Acácias, 480 — Jardim Europa, CEP 01449-000",
+    "city": "São Paulo",
+    "state": "SP",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Jardim+Europa+S%C3%A3o+Paulo",
+    "phone": "(11) 3456-7890",
+    "email": "contato@odontovita.example.com",
+    "website": "https://odontovita.example.com"
+  },
+  "agent": {
+    "name": "Vita",
+    "tone": "acolhedor, profissional e confiante; linguagem simples, sem jargões técnicos; transmite tranquilidade a quem tem receio de dentista.",
+    "greeting": "Olá! Eu sou a Vita, assistente virtual da OdontoVita. Como posso te ajudar hoje?",
+    "instructions": "O principal objetivo comercial é agendar a avaliação inicial. Quando o paciente demonstrar interesse em qualquer tratamento, explique que tudo começa pela avaliação e ofereça encaminhar o agendamento para a equipe, registrando nome, tratamento de interesse e melhor período (manhã/tarde).",
+    "businessRules": [
+      "A avaliação inicial custa R$ 250 e o valor é integralmente abatido do orçamento se o paciente iniciar o tratamento.",
+      "Pagamento: Pix, cartões de débito e crédito em até 12 vezes. Condições especiais para planos de tratamento completos são definidas pela equipe após a avaliação.",
+      "A clínica é particular e não atende por convênio; fornece documentação para reembolso quando previsto no plano do paciente.",
+      "Orçamentos de tratamentos só são feitos após a avaliação clínica."
+    ],
+    "allowedInfo": [
+      "Serviços, preços cadastrados, formas de pagamento, endereço, horários e como funciona a avaliação."
+    ],
+    "restrictedInfo": [
+      "Diagnósticos, prescrição de medicamentos ou orientações clínicas individuais.",
+      "Valores de tratamentos que não estejam cadastrados.",
+      "Nomes, agendas ou dados pessoais de profissionais e de outros pacientes."
+    ],
+    "handoffTriggers": [
+      "o paciente relatar dor forte, sangramento, inchaço ou trauma (urgência)",
+      "o paciente quiser confirmar um horário de agendamento",
+      "dúvidas sobre um tratamento já em andamento"
+    ],
+    "qualificationQuestions": [
+      "Qual tratamento ou incômodo motivou o contato?",
+      "Já fez avaliação conosco ou é a primeira vez?",
+      "Prefere atendimento pela manhã ou à tarde?"
+    ],
+    "handoffMessage": "Vou passar sua conversa para a nossa equipe de atendimento, que continua com você por aqui mesmo. Em horário comercial, o retorno costuma ser rápido.",
+    "fallbackMessage": "Desculpe, tive uma instabilidade para responder agora. Já avisei nossa equipe, que vai continuar o atendimento com você por aqui.",
+    "maxReplyChars": 600,
+    "handoffTimeoutMinutes": 720
+  },
+  "businessHours": [
+    { "days": [1, 2, 3, 4, 5], "opensAt": "08:00", "closesAt": "20:00" },
+    { "days": [6], "opensAt": "08:00", "closesAt": "14:00" }
+  ],
+  "catalog": [
+    {
+      "name": "Avaliação inicial completa",
+      "description": "Consulta de cerca de 60 minutos com exame clínico, escaneamento intraoral 3D, fotografias e plano de tratamento detalhado.",
+      "priceType": "fixed",
+      "price": 250,
+      "durationMinutes": 60
+    },
+    {
+      "name": "Implantes dentários",
+      "description": "Planejamento com tomografia e cirurgia guiada por computador. Em casos indicados, é possível sair com provisórios no mesmo dia.",
+      "priceType": "on_request"
+    },
+    {
+      "name": "Clareamento dental",
+      "description": "Clareamento supervisionado, com protocolo definido após avaliação da sensibilidade.",
+      "priceType": "on_request"
+    },
+    {
+      "name": "Lentes de contato dental",
+      "description": "Facetas ultrafinas planejadas digitalmente para harmonizar cor e formato do sorriso.",
+      "priceType": "on_request"
+    },
+    {
+      "name": "Ortodontia",
+      "description": "Aparelhos fixos e alinhadores transparentes, com planejamento digital.",
+      "priceType": "on_request"
+    },
+    {
+      "name": "Odontologia preventiva",
+      "description": "Limpeza profissional, check-up e orientação de higiene.",
+      "priceType": "on_request"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Como funciona a primeira consulta?",
+      "answer": "A primeira consulta dura cerca de 60 minutos: conversa sobre histórico e objetivos, exame clínico completo, escaneamento intraoral 3D e fotografias. Ao final, o paciente recebe diagnóstico e plano de tratamento com etapas, prazos e investimento."
+    },
+    {
+      "question": "Vocês trabalham com convênio?",
+      "answer": "Somos uma clínica particular. Fornecemos toda a documentação para solicitar reembolso ao plano odontológico, quando previsto no contrato do paciente."
+    },
+    {
+      "question": "Os tratamentos causam dor?",
+      "answer": "O conforto é prioridade: usamos anestesia computadorizada, técnicas minimamente invasivas e, quando indicado, sedação consciente acompanhada por especialista."
+    },
+    {
+      "question": "Como agendar uma consulta?",
+      "answer": "Por aqui mesmo no WhatsApp ou pelo telefone (11) 3456-7890. A equipe confirma o melhor dia e horário com o paciente."
+    }
+  ],
+  "knowledge": []
+}

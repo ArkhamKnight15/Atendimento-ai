@@ -1,0 +1,45 @@
+{
+  "name": "atendimento-ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma multi-cliente de agentes de atendimento com IA (WhatsApp, Instagram e sites).",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "check": "npm run typecheck && npm run lint && npm run test",
+    "db:migrate": "tsx scripts/db-migrate.ts",
+    "tenant:apply": "tsx scripts/tenant-apply.ts",
+    "channel:connect": "tsx scripts/channel-connect.ts",
+    "webhook:add": "tsx scripts/webhook-add.ts",
+    "keys:generate": "tsx scripts/generate-key.ts",
+    "chat": "tsx scripts/chat.ts",
+    "webhook:smoke": "tsx scripts/webhook-smoke.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.4.0",
+    "next": "^16.4.5",
+    "postgres": "^3.4.9",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.2.7",
+    "oxlint": "^1.91.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

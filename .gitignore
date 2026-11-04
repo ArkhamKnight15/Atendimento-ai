@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# ambiente — nunca versione segredos
+.env
+.env.local
+.env.*.local
+
+.vercel
+.DS_Store
+npm-debug.log*
