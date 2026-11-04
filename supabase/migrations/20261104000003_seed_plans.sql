@@ -8,17 +8,17 @@ insert into public.plans
 values
   ('basico', 'Básico',
    'Atendimento automatizado, respostas a perguntas frequentes e captação de contatos.',
-   29700, 50000, 2000, 5000000, 1,
+   49700, 99000, 2000, 5000000, 1,
    '{"faq": true, "leadCapture": true, "leadQualification": false, "scheduling": false, "automations": false, "reports": false, "followUps": false, "customFlows": false}',
    'claude-haiku-5-5', 'medium'),
   ('profissional', 'Profissional',
    'Tudo do Básico + qualificação de leads, agendamentos, integrações com automações, histórico e relatórios.',
-   59700, 120000, 6000, 15000000, 1,
+   89700, 199000, 6000, 15000000, 1,
    '{"faq": true, "leadCapture": true, "leadQualification": true, "scheduling": true, "automations": true, "reports": true, "followUps": false, "customFlows": false}',
    'claude-haiku-5-5', 'medium'),
   ('avancado', 'Avançado',
    'Tudo do Profissional + fluxos comerciais personalizados, integrações adicionais, follow-ups e gestão avançada.',
-   119700, 250000, 15000, 40000000, 3,
+   169700, 399000, 15000, 40000000, 3,
    '{"faq": true, "leadCapture": true, "leadQualification": true, "scheduling": true, "automations": true, "reports": true, "followUps": true, "customFlows": true}',
    'claude-haiku-5-5', 'medium')
 on conflict (code) do nothing;

@@ -1,4 +1,4 @@
-# Diretrizes do projeto — Atendimento AI
+# Diretrizes do projeto — Luma (agentes de atendimento com IA)
 
 Responda em português. Atue como engenheiro responsável por um produto comercial usado por empresas reais.
 

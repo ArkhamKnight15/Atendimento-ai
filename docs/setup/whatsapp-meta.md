@@ -11,7 +11,10 @@
 
 ## 1. Conta e app (uma vez, pela agência)
 
-1. Crie (ou use) o **portfólio empresarial** da agência em <https://business.facebook.com> e inicie a **verificação da empresa** (CNPJ). Sem ela, os limites são baixos e não é possível escalar.
+1. Crie (ou use) o **portfólio empresarial** da Luma em <https://business.facebook.com>.
+   - **Sem CNPJ** já dá para criar o app, usar o **número de teste** e fazer o piloto inteiro.
+   - Cada **cliente** usa a própria WABA, verificada com o CNPJ **dele**.
+   - A **verificação da Luma** (com CNPJ) só é necessária para escalar com o próprio portfólio e para o Embedded Signup (Fase 6).
 2. Em <https://developers.facebook.com/apps>, crie um app do tipo **Business** e adicione o produto **WhatsApp**.
 3. Em **App settings → Basic**, copie o **App Secret** → variável `META_APP_SECRET`.
 

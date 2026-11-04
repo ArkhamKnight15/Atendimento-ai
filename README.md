@@ -1,6 +1,6 @@
-# Atendimento AI
+# Luma — Agentes de atendimento com IA
 
-Plataforma multi-cliente de **agentes de atendimento com IA** para empresas: atende pelo **WhatsApp oficial (Cloud API)**,
+Plataforma multi-cliente da **Luma** para vender e operar **agentes de atendimento com IA** para empresas: atende pelo **WhatsApp oficial (Cloud API)**,
 responde só com as informações cadastradas da empresa, capta e qualifica leads, transfere para humanos e integra com
 automações (n8n). Instagram e chat de site estão previstos na arquitetura.
 
